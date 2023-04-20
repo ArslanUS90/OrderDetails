@@ -1,0 +1,49 @@
+<?php
+    $order  = $block->getOrder();
+    $source = $block->getSource();
+    $fullInfo = $block->getHelper()->getCalculatedTaxes($source);
+?>
+
+<?php if ($fullInfo && $block->displayFullSummary()): ?>
+        <?php foreach ($fullInfo as $info): ?>
+            <?php
+                $percent    = $info['percent'];
+                $amount     = $info['tax_amount'];
+                $baseAmount = $info['base_tax_amount'];
+                $title      = $info['title'];
+            ?>
+            <tr class="totals tax details?>
+            <?php echo($block->getIsPlaneMode()) ? ' plane' : '';?>">
+                <th colspan="5" <?php /* @escapeNotVerified */ echo $block->getLabelProperties()?>>
+                    <?php echo $block->escapeHtml($title); ?>
+                    <?php if (!is_null($percent)): ?>
+                        (<?php echo (float)$percent; ?>%)
+                    <?php endif; ?>
+                    <br />
+                </th>
+                <td <?php /* @escapeNotVerified */ echo $block->getValueProperties()?> rowspan="1">
+                    <?php /* @escapeNotVerified */ echo $order->formatPrice($amount); ?>
+                </td>
+            </tr>
+        <?php endforeach; ?>
+<?php endif;?>
+
+<?php if ($block->displayFullSummary() && $fullInfo && !$block->getIsPlaneMode()): ?>
+<tr class="totals-tax-summary">
+<?php elseif ($block->displayFullSummary() && $fullInfo && $block->getIsPlaneMode()): ?>
+<tr class="totals-tax-summary plane">
+<?php else: ?>
+<tr class="totals-tax">
+<?php endif; ?>
+    <th colspan="5"<?php /* @escapeNotVerified */ echo $block->getLabelProperties()?> scope="row">
+        <?php if ($block->displayFullSummary()): ?>
+            <div class="detailed"><?php /* @escapeNotVerified */ echo __('Tax'); ?></div>
+        <?php else: ?>
+            <?php /* @escapeNotVerified */ echo __('Tax'); ?>
+        <?php endif;?>
+    </th>
+    <td <?php /* @escapeNotVerified */ echo $block->getValueProperties()?>
+            data-th="<?php echo $block->escapeHtml(__('Tax')); ?>">
+        <?php /* @escapeNotVerified */ echo $order->formatPrice($source->getTaxAmount()) ?>
+    </td>
+</tr>

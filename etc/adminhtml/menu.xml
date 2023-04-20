@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Backend:etc/menu.xsd">
+    <menu>
+        <add id="ArslanFarrukh_OrderDetails::menu"
+             title="Order Details"
+             module="ArslanFarrukh_OrderDetails"
+             sortOrder="50"
+             resource="ArslanFarrukh_OrderDetails::menu"
+             parent="ArslanFarrukh_Core::arslan"
+        />
+        <add id="ArslanFarrukh_OrderDetails::configuration"
+             title="Configuration"
+             module="ArslanFarrukh_OrderDetails"
+             sortOrder="10"
+             action="adminhtml/system_config/edit/section/order_details"
+             resource="ArslanFarrukh_OrderDetails::config"
+             parent="ArslanFarrukh_OrderDetails::menu"
+        />
+    </menu>
+</config>
